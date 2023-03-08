@@ -9,14 +9,9 @@ import lombok.Data;
 @Data
 public class Transacao implements Serializable {
     private static final long serialVersionUID = 1L;
-
     private Integer id;
-
     private String descricao;
-
     private BigDecimal valor;
-
     private Date data;
-
     private Conta conta;
 }

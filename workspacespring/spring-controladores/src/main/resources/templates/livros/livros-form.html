@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Livros</title>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+</head>
+<body>
+  <h2>Cadastro de Livros</h2>
+  <hr>
+  <div th:text="${mensagem}" class="msg-erro"></div>
+
+    <form action="/livros/save" method="POST" th:object="${livro}">
+      Título: <input type="text" th:field="*{titulo}"/><br/>
+      Autor: <input type="text" th:field="*{autor}"/><br/>
+      Estilo: <select th:field="*{estilo}">
+        <option th:each="e : ${estilos}"
+                th:value="${e.key}"
+                th:text="${e.value}"
+                th:selected="${e.key==estilo}">
+
+        <br/>
+    </select>
+    <input type="submit" value="Salvar"/>
+  </form>
+</body>
+</html>

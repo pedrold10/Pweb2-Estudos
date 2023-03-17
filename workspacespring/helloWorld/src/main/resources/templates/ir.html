@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cálculo do Valor Tributável</title>
+</head>
+<body>
+    <h1>Calcula o valor tributável, dado o salário base e a aliquota do IR</h1>
+    <form method="POST" th:action="@{/calcvt}">
+        <div>
+            <label>Salário Base</label>
+            <input type="text" name="salbase">
+
+            <label>Aliquota do IR</label>
+            <select name="aliq">
+                <option value=".275" label="27,5%"></option>
+                <option value=".225" label="22,5%"></option>
+                <option value=".18" label="18,0%"></option>
+                <option value=".15" label="15,5%"></option>
+            </select>
+            <input type="submit" value="Calcular"/>
+        </div>
+    </form>
+    <hr/>
+    <h1>Valor tributável calculado: R$<span th:text="${valorTributavel.toFixed(2)}"></span></h1>
+</body>
+</html>

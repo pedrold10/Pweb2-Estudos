@@ -1,11 +1,11 @@
 package br.edu.ifpb.pweb2.helloWorld.controller;
 
+import br.edu.ifpb.pweb2.helloWorld.model.Imposto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.Date;
@@ -29,18 +29,17 @@ public class HelloSpringController {
     }
 
     @RequestMapping("/formvt")
-    public String exibirFormularioIR(){
+    public String exibirFormularioIR(Model model, Imposto imposto){
+        model.addAttribute("imposto", imposto);
         return "ir";
     }
 
     //@RequestMapping(value= "/calcvt", method= RequestMethod.POST)
     @PostMapping("/calcvt")
-    public String calcularValorTributavel(
-            @RequestParam("salbase") double salarioBase,
-            @RequestParam("aliq") double aliquotaIR,
-            Model model){
-        double valorTributavel = salarioBase * aliquotaIR;
-        model.addAttribute("valorTributavel", valorTributavel);
+    public String calcularValorTributavel(Imposto imposto, Model model){
+        imposto.calcularValorTributavel();
+        System.out.println(imposto);
+        model.addAttribute("imposto", imposto);
         return "ir";
     }
 }

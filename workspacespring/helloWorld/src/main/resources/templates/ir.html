@@ -6,13 +6,13 @@
 </head>
 <body>
     <h1>Calcula o valor tributável, dado o salário base e a aliquota do IR</h1>
-    <form method="POST" th:action="@{/calcvt}">
+    <form method="POST" th:action="@{/calcvt}" th:object="${imposto}">
         <div>
             <label>Salário Base</label>
-            <input type="text" name="salbase">
+            <input type="text" th:field="*{salarioBase}" >
 
             <label>Aliquota do IR</label>
-            <select name="aliq">
+            <select th:field="*{aliquota}">
                 <option value=".275" label="27,5%"></option>
                 <option value=".225" label="22,5%"></option>
                 <option value=".18" label="18,0%"></option>
@@ -22,6 +22,6 @@
         </div>
     </form>
     <hr/>
-    <h1>Valor tributável calculado: R$<span th:text="${valorTributavel}"></span></h1>
+    <h1>Valor tributável calculado: R$<span th:text="${imposto.valorTributavel}"></span></h1>
 </body>
 </html>

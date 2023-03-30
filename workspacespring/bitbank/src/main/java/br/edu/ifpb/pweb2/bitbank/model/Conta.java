@@ -10,6 +10,10 @@ import lombok.Data;
 
 @Data
 public class Conta implements Serializable {
+    public Conta(Correntista correntista) {
+        this.correntista = correntista;
+    }
+
     private static final long serialVersionUID = 1L;
     private Integer id;
     private String numero;

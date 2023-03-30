@@ -27,9 +27,9 @@ public class Transacao implements Serializable {
     @NumberFormat(pattern = "###,##0.00")
     private BigDecimal valor;
 
-    @ManyToOne
-    @JoinColumn(name = "id_conta")
     private Date data;
 
+    @ManyToOne
+    @JoinColumn(name = "id_conta")
     private Conta conta;
 }

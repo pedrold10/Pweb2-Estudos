@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
+<head>
+    <title>Bitbank - Cadastro de Conta</title>
+</head>
+<body>
+    <h1 class="mb-3">Cadastro de conta</h1>
+
+    <form action="@{/contas}" method="post" th:object="${conta}">
+        <input type="hidden" th:field="*{id}"/>
+        <label for="numero">Número</label>
+        <input id="numero" type="text" th:field="*{numero}"/><br><br>
+        <label for="correntista">Correntista</label>
+        <select th:field="*{correntista.id}" id="correntista">
+            <option th:each="cor : ${correntistaItems}" th:value="${cor.id}" th:label="${cor.nome}"/>
+        </select>
+        <br><br>
+
+        <label for="lastName">Data</label>
+        <input type="text" id="lastName"><br><br>
+        <hr>
+
+        <button type="submit">Salvar</button>
+        <a th:href="@{/contas/lista}">Cancelar</a>
+    </form>
+</body>
+</html>

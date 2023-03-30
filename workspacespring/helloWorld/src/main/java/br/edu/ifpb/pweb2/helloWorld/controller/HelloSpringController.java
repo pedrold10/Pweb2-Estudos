@@ -4,10 +4,14 @@ import br.edu.ifpb.pweb2.helloWorld.model.Imposto;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 
 @Controller
@@ -38,8 +42,14 @@ public class HelloSpringController {
     @PostMapping("/calcvt")
     public String calcularValorTributavel(Imposto imposto, Model model){
         imposto.calcularValorTributavel();
-        System.out.println(imposto);
         model.addAttribute("imposto", imposto);
         return "ir";
+    }
+
+    @ModelAttribute("aliquotas")
+    private List<Double> geraListaAliquotas(){
+        return new ArrayList<Double>(){
+            Arrays.asList(27.5, 22.0, 20.5, 18.0)
+        };
     }
 }

@@ -10,9 +10,7 @@ import javax.validation.constraints.Size;
 @Data
 public class Correntista implements Serializable {
     private static final long serialVersionUID = 1L;
-    @NotNull(message="O campo Id não pode ser nulo")
     private Integer id;
-    @Size(max=50, message="O campo nome só pode ter até 50 caracteres")
     private String nome;
     private String email;
     private String senha;

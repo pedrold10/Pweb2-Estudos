@@ -6,12 +6,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.validation.Valid;
+
 @Controller
 @RequestMapping("/correntistas")
 public class CorrentistaController {
 
     @RequestMapping("/form")
     public String getForm(Correntista correntista, Model model){
+        if (correntista.getNome() == null || correntista.getEmail() == null) {
+            model.addAttribute("error", "Todos os campos são obrigatórios");
+            return "correntistas/form";
+        }
         model.addAttribute("correntista", correntista);
         return "correntistas/form";
     }

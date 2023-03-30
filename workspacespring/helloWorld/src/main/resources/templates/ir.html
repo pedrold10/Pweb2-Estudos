@@ -13,10 +13,8 @@
 
             <label>Aliquota do IR</label>
             <select th:field="*{aliquota}">
-                <option value=".275" label="27,5%"></option>
-                <option value=".225" label="22,5%"></option>
-                <option value=".18" label="18,0%"></option>
-                <option value=".15" label="15,5%"></option>
+                <option th:each="aliquota : ${aliquotas}" th:values="${aliquota / 100}" th:text=""></option>
+
             </select>
             <input type="submit" value="Calcular"/>
         </div>

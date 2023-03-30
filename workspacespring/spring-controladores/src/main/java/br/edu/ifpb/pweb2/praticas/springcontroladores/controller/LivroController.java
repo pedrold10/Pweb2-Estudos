@@ -51,7 +51,7 @@ public class LivroController {
         return "/livros/list-livros";
     }
     @RequestMapping("/busque/{id}")
-    public String busqueLivro(@PathVariable("id") Integer id, Model model){
+    public String busqueLivro(@PathVariable("id") Long id, Model model){
         Livro livro = livroRepository.findById(id);
         model.addAttribute("livros", Collections.singleton(livro));
         return "livros/list-livros";

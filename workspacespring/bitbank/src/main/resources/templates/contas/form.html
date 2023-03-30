@@ -1,27 +1,32 @@
-<!doctype html>
-<html lang="pt_BR" xmlns:th="www.thymeleaf.org">
-<head>
-    <title>Bitbank - Cadastro de Conta</title>
-</head>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" th:with="titulo='Cadastro de conta'">
+
 <body>
-    <h1 class="mb-3">Cadastro de conta</h1>
+    <div layout:fragment="content">
 
-    <form action="@{/contas}" method="post" th:object="${conta}">
-        <input type="hidden" th:field="*{id}"/>
-        <label for="numero">Número</label>
-        <input id="numero" type="text" th:field="*{numero}"/><br><br>
-        <label for="correntista">Correntista</label>
-        <select th:field="*{correntista.id}" id="correntista">
-            <option th:each="cor : ${correntistaItems}" th:value="${cor.id}" th:label="${cor.nome}"/>
-        </select>
-        <br><br>
+        <form th:action="@{/contas}" method="POST" th:object="${conta}">
+            <input type="hidden" th:field="*{id}" class="form-control" />
 
-        <label for="lastName">Data</label>
-        <input type="text" id="lastName"><br><br>
-        <hr>
+            <label for="id">Número</label>
+            <input type="text" th:field="*{numero}" id="id" class="form-control" /><br /><br />
 
-        <button type="submit">Salvar</button>
-        <a th:href="@{/contas/lista}">Cancelar</a>
-    </form>
+            <label for="correntista">Correntista</label>
+            <select th:field="*{correntista}" id="correntista" class="form-select">
+                <option th:each="cor : ${correntistaItems}"
+                        th:value="${cor.id}"
+                        th:text="${cor.nome}"
+                        th:selected="${cor.id==correntista}"
+                />
+            </select>
+            <br /><br />
+
+            <label for="lastName">Data</label>
+            <input type="text" th:field="*{data}" class="form-control" /><br /><br />
+
+            <hr>
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a class="btn btn-secondary" th:href="@{/contas}">Cancelar</a>
+        </form>
+    </div>
 </body>
+
 </html>

@@ -1,20 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro de Correntistas</title>
-</head>
-<body>
-  <h1>Cadastro de Correntista</h1>
-  <div th:text="${mensagem}" style="color: red"></div>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/layout}" th:with="titulo='Cadastro de correntista'">
 
-  <form th:action="@{/correntistas/save}" method="POST" th:object="${correntista}">
-    Id: <input type="text" th:field="*{id}"><br><br>
-    Nome: <input type="text" th:field="*{nome}"><br><br>
-    Senha: <input type="password" th:field="*{senha}"><br><br>
-    Email: <input type="text" th:field="*{email}"><br><br>
-    Admin?: <input type="checkbox" th:field="*{admin}"><br><br>
-    <input type="submit" value="Salvar">
-  </form>
+<body>
+    <div layout:fragment="content">
+        <form th:action="@{/correntistas}" method="POST" th:object="${correntista}">
+            <input type="hidden" th:field="*{id}" />
+
+            <label for="nome" class="form-label">Nome:</label>
+            <input type="text" th:field="*{nome}" class="form-control" /><br /><br />
+
+            <label for="nome" class="form-label">Senha:</label>
+            <input type="password" th:field="*{senha}" class="form-control" /><br /><br />
+
+            <label for="nome" class="form-label">Email:</label>
+            <input type="text" th:field="*{email}" class="form-control" /><br /><br />
+
+            <input type="checkbox" th:field="*{admin}" class="form-check-input" />
+            <label class="form-check-label">
+                Administrador
+            </label>
+
+            <br /><br />
+            <input type="submit" value="Salvar" />
+        </form>
+    </div>
 </body>
+
 </html>

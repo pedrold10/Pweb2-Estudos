@@ -1,0 +1,65 @@
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.w3.org/1999/xhtml"
+      layout:decorate="~{layout/layout}" th:with="titulo='Operações em Conta'">
+
+<body>
+<div layout:fragment="content">
+
+    <div th:if="${conta == null}">
+        <form th:action="@{/contas/operacao}" method="POST">
+            <div class="row">
+                <div class="col-md-2 mb-2">
+                    <label for="nuConta">Número da conta</label>
+                    <input type="text" id="nuConta" name="nuConta" class="form-control" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <button class="btn btn-primary btn-md btn-block" type="submit">
+                        Próximo
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div th:if="${conta != null}">
+        <ul class="list-group list-group-flush">
+            <li class="list-group-item">Conta:
+                <span th:text="${conta.numero}"></span>
+            </li>
+            <li class="list-group-item">Correntista:
+                <span th:text="${conta.correntista.nome}"></span>
+            </li>
+            <li class="list-group-item">Data abertura:
+                <span th:text="${#dates.format(conta.data, 'dd/MM/yyyy')}"></span>
+            </li>
+        </ul>
+
+        <div style="margin-bottom: 30px;"></div>
+
+        <h4>Informações da transação</h4>
+        <hr class="mb-4">
+
+        <form action="operacao" method="POST" th:object="${transacao}">
+            <input type="hidden" th:field="*{id}" />
+            <input type="hidden" th:value="${conta.numero}" id="nuConta" name="nuConta" />
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="descricao">Descrição</label>
+                    <input type="text" class="form-control" th:field="*{descricao}" /> <br />
+
+                    <label for="data">Data</label>
+                    <input type="text" class="form-control" th:field="*{data}" /> <br />
+                    <label for="valor">Valor</label>
+                    <input type="text" class="form-control" th:field="*{valor}" /><br />
+
+                    <button class="btn btn-primary btn-md btn-block" type="submit">Realizar
+                        operação</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+</body>
+
+</html>

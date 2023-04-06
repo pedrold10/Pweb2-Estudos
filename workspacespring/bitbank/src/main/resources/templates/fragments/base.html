@@ -1,4 +1,4 @@
-<head th:fragment="headfiles(titulo)">
+<head th:fragment="headfiles(titulo)" xmlns:th="http://www.w3.org/1999/xhtml">
     <title th:text="'BitBank - ' + ${titulo}"></title>
     <meta charset="utf-8">
     <link th:href="@{https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css}" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
@@ -21,6 +21,7 @@
             <a th:classappend="${menu == 'home'} ? 'active'" class="nav-item nav-link" th:href="@{/home}">Home</a>
             <a th:classappend="${menu == 'correntistas'} ? 'active'" class="nav-item nav-link" th:href="@{/correntistas}">Correntistas</a>
             <a th:classappend="${menu == 'contas'} ? 'active'" class="nav-item nav-link" th:href="@{/contas}">Contas</a>
+            <a th:classappend="${menu == 'operacoes'} ? 'active'" class="nav-item nav-link" th:href="@{/contas/nuconta}">Operações</a>
         </div>
         <div style="margin-right: 5px;"><a href="#"><button class="btn btn-outline-secondary my-2 my-sm-0">Sair</button></a></div>
     </nav>

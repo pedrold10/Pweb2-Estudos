@@ -3,6 +3,7 @@ package br.edu.ifpb.pweb2.bitbank.controller;
 import java.util.List;
 import java.util.Optional;
 
+import br.edu.ifpb.pweb2.bitbank.model.Transacao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +27,45 @@ public class ContaController {
     @Autowired
     CorrentistaRepository correntistaRepository;
 
+    @RequestMapping("/nuconta")
+    public ModelAndView getNuConta(ModelAndView mav) {
+        mav.setViewName("contas/operacao");
+        return mav;
+    }
+
+    @RequestMapping(value = "/operacao")
+    public ModelAndView operacaoConta(String nuConta, Transacao transacao,
+                                      ModelAndView mav, RedirectAttributes attr) {
+        String proxPagina = "";
+        if (nuConta != null && transacao.getValor() == null) {
+            Conta conta = contaRepository.findByNumeroWithTransacoes(nuConta);
+            if (conta != null) {
+                mav.addObject("conta", conta);
+                mav.addObject("transacao", transacao);
+                proxPagina = "contas/operacao";
+            } else {
+                mav.addObject("mensagem", "Conta inexistente!");
+                proxPagina = "contas/operacao";
+            }
+        } else {
+            Conta conta = contaRepository.findByNumeroWithTransacoes(nuConta);
+            conta.addTransacao(transacao);
+            contaRepository.save(conta);
+            proxPagina = "redirect:/contas/" + conta.getId() + "/transacoes";
+        }
+        mav.setViewName(proxPagina);
+        return mav;
+    }
+
+    @RequestMapping(value = "/{id}/transacoes")
+    public ModelAndView addTransacaoConta(@PathVariable("id") Integer idConta, ModelAndView model) {
+        Conta conta = contaRepository.findByIdWithTransacoes(idConta);
+        model.addObject("conta", conta);
+        model.setViewName("contas/transacoes");
+        return model;
+    }
+
+
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView save(Conta conta, ModelAndView modelAndView, RedirectAttributes attrs){
         Correntista correntista = null;
@@ -42,6 +82,8 @@ public class ContaController {
         }
         return modelAndView;
     }
+
+
     @RequestMapping("/form")
     public ModelAndView getForm(ModelAndView modelAndView) {
         modelAndView.setViewName("contas/form");

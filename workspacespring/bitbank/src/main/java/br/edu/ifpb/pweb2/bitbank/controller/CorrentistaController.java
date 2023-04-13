@@ -54,7 +54,6 @@ public class CorrentistaController {
 
     @RequestMapping("/{id}/delete")
     public ModelAndView deleteById(@PathVariable("id") Integer id, ModelAndView mav, RedirectAttributes attr) {
-        System.out.println("sdklfjsdlkfjsdlkjlsdkfjlsdkjfklsdjflk;dsj");
         correntistaRepository.deleteById(id);
         attr.addFlashAttribute("mensagem", "Correntista removido com sucesso!");
         mav.setViewName("redirect:/correntistas");

@@ -22,7 +22,7 @@
                 <img th:src="@{/imagens/bitbank-header-t.png}"/>BitBank</span>
         </div>
         <div class="container">
-            <div th:text="${mensagem}"class="msg-erro">
+            <div th:text="${mensagem}" class="msg-erro">
 
             </div>
             <div class="card">
@@ -36,6 +36,9 @@
 
                         <label for="nome" class="form-label">Nome:</label>
                         <input type="text" th:field="*{nome}" /><br /><br />
+
+                        <label for="email" class="form-label">Email:</label>
+                        <input type="text" th:field="*{email}" /><br /><br />
 
                         <label for="senha"class="form-label">Senha:</label>
                         <input type="password" th:field="*{senha}" /><br /><br />

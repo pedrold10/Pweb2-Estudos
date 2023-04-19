@@ -44,16 +44,17 @@ public class CorrentistaController {
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getCorrentistaById(Correntista correntista, @PathVariable(value = "id") Integer id, ModelAndView mav) {
+    public ModelAndView getCorrentistaById(Correntista correntista, @PathVariable(value = "id") Integer id,
+                                           ModelAndView mav) {
         Optional<Correntista> opCorrentista =
                 correntistaRepository.findById(correntista.getId());
         mav.addObject("correntista", opCorrentista.get());
         mav.setViewName("correntistas/form");
         return mav;
     }
-
     @RequestMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable("id") Integer id, ModelAndView mav, RedirectAttributes attr) {
+    public ModelAndView deleteById(@PathVariable(value = "id") Integer id,
+                                   ModelAndView mav, RedirectAttributes attr) {
         correntistaRepository.deleteById(id);
         attr.addFlashAttribute("mensagem", "Correntista removido com sucesso!");
         mav.setViewName("redirect:/correntistas");

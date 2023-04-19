@@ -112,7 +112,7 @@ public class ContaController {
     }
 
     @RequestMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable("id") Integer id,
+    public ModelAndView deleteById(@PathVariable(value = "id") Integer id,
                                    ModelAndView mav, RedirectAttributes attr) {
         contaRepository.deleteById(id);
         attr.addFlashAttribute("mensagem", "Conta removida com sucesso!");

@@ -1,7 +1,10 @@
 package br.edu.ifpb.pweb2.bitbank.controller;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -11,53 +14,49 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 import br.edu.ifpb.pweb2.bitbank.repository.CorrentistaRepository;
 
-import java.util.Optional;
-
 @Controller
 @RequestMapping("/correntistas")
 public class CorrentistaController {
-
     @Autowired
     CorrentistaRepository correntistaRepository;
 
+    @ModelAttribute("menu")
+    public String selectMenu() {
+        return "correntista";
+    }
+
     @RequestMapping("/form")
-    public ModelAndView getForm(Correntista correntista, ModelAndView mav) {
-        mav.addObject("correntista", correntista);
-        mav.setViewName("correntistas/form");
-        return mav;
+    public ModelAndView getForm(Correntista correntista, ModelAndView model) {
+        model.addObject("correntista", correntista);
+        model.setViewName("correntistas/form");
+        return model;
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(Correntista correntista, ModelAndView mav, RedirectAttributes attrs) {
+    public ModelAndView save(Correntista correntista, ModelAndView model, RedirectAttributes redAttrs) {
         correntistaRepository.save(correntista);
-        mav.setViewName("redirect:correntistas");
-        attrs.addFlashAttribute("mensagem", "Correntista cadastrado com sucesso!");
-        return mav;
+        model.addObject("correntistas", correntistaRepository.findAll());
+        model.setViewName("redirect:correntistas");
+        redAttrs.addFlashAttribute("mensagem", "Correntista cadastrado com sucesso!");
+        return model;
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView listAll(ModelAndView mav) {
-        mav.addObject("correntistas", correntistaRepository.findAll());
-        mav.addObject("menu", "correntistas");
-        mav.setViewName("correntistas/list");
-        return mav;
+    public ModelAndView listAll(ModelAndView model) {
+        model.addObject("correntistas", correntistaRepository.findAll());
+        model.setViewName("correntistas/list");
+        return model;
     }
 
     @RequestMapping("/{id}")
-    public ModelAndView getCorrentistaById(Correntista correntista, @PathVariable(value = "id") Integer id,
-                                           ModelAndView mav) {
-        Optional<Correntista> opCorrentista =
-                correntistaRepository.findById(correntista.getId());
-        mav.addObject("correntista", opCorrentista.get());
-        mav.setViewName("correntistas/form");
-        return mav;
-    }
-    @RequestMapping("/{id}/delete")
-    public ModelAndView deleteById(@PathVariable(value = "id") Integer id,
-                                   ModelAndView mav, RedirectAttributes attr) {
-        correntistaRepository.deleteById(id);
-        attr.addFlashAttribute("mensagem", "Correntista removido com sucesso!");
-        mav.setViewName("redirect:/correntistas");
-        return mav;
+    public ModelAndView getCorrentistaById(@PathVariable(value = "id") Integer id, ModelAndView model) {
+        model.setViewName("correntistas/form");
+        Optional<Correntista> opCorrentista = correntistaRepository.findById(id);
+        if (opCorrentista.isPresent()) {
+            model.addObject("correntista", opCorrentista.get());
+        } else {
+            model.addObject("mensagem", "Correntista com id " + id + " não encontrado.");
+        }
+        return model;
     }
 }

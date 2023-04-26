@@ -6,13 +6,20 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import javax.persistence.*;
+import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
@@ -30,7 +37,7 @@ public class Conta implements Serializable {
     @DateTimeFormat(pattern = "dd/MM/yyyy")
     private Date data;
 
-    @OneToMany(mappedBy = "conta")
+    @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)
     private Set<Transacao> transacoes = new HashSet<Transacao>();
 
     @OneToOne
@@ -48,7 +55,8 @@ public class Conta implements Serializable {
         }
         return total;
     }
-    public void addTransacao(Transacao transacao){
+
+    public void addTransacao(Transacao transacao) {
         this.transacoes.add(transacao);
         transacao.setConta(this);
     }

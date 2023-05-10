@@ -8,4 +8,5 @@ import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 @Repository
 public interface CorrentistaRepository extends JpaRepository<Correntista, Integer> {
 
+    Correntista findByEmail(String email);
 }

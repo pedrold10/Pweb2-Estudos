@@ -14,6 +14,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -32,9 +36,13 @@ public class Conta implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @NotBlank(message = "Campo obrigatório!")
+    @Digits(integer = 6, fraction = 0, message = "Informe um número de até 6 dígitos")
     private String numero;
 
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @NotNull(message = "Campo obrigatório!")
+    @Future(message = "Data deve ser futura")
     private Date data;
 
     @OneToMany(mappedBy = "conta", cascade = CascadeType.ALL)

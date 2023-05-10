@@ -3,9 +3,12 @@ package br.edu.ifpb.pweb2.bitbank.controller;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,7 +46,11 @@ public class ContaController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ModelAndView save(Conta conta, ModelAndView model, RedirectAttributes attrs) {
+    public ModelAndView save(@Valid Conta conta, BindingResult validation, ModelAndView model, RedirectAttributes attrs) {
+        if (validation.hasErrors()) {
+            model.setViewName("contas/form");
+            return model;
+        }
         Correntista correntista = null;
         Optional<Correntista> opCorrentista = correntistaRepository.findById(conta.getCorrentista().getId());
         if (opCorrentista.isPresent()) {

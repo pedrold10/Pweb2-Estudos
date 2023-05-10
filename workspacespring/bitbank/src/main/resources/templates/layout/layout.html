@@ -2,7 +2,10 @@
 <html lang="pt_BR" xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
 
 <head>
-    <meta th:insert="~{/fragments/base :: headfiles(${titulo})}">
+    <meta th:insert="~{/fragments/base :: headfiles(${titulo}, ~{::link})}">
+    <link rel="stylesheet" href="">
+</meta>
+
 </head>
 
 <body>

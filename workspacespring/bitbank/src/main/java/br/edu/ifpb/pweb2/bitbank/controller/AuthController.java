@@ -1,6 +1,5 @@
 package br.edu.ifpb.pweb2.bitbank.controller;
 
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import br.edu.ifpb.pweb2.bitbank.model.Correntista;
 import br.edu.ifpb.pweb2.bitbank.repository.CorrentistaRepository;
 import br.edu.ifpb.pweb2.bitbank.util.PasswordUtil;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/auth")
@@ -29,7 +30,7 @@ public class AuthController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ModelAndView valide(Correntista correntista, HttpSession session, ModelAndView modelAndView,
-            RedirectAttributes redirectAttts) {
+                               RedirectAttributes redirectAttts) {
         if ((correntista = this.isValido(correntista)) != null) {
             session.setAttribute("usuario", correntista);
             modelAndView.setViewName("redirect:/home");
